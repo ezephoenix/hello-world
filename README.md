@@ -1,4 +1,4 @@
-# nodecolor
+# hello-world
 
 [![Circle CI](https://circleci.com/gh/ezephoenix/hello-world.svg?style=svg)](https://circleci.com/gh/ezephoenix/hello-world)
 
