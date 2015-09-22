@@ -1,0 +1,23 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - echo "override section"
+
+test:
+  override:
+    - echo "no tests yet =("
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker build -t ezephoenix/hello-world:0.$CIRCLE_BUILD_NUM .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push ezephoenix/hello-world:0.$CIRCLE_BUILD_NUM
+
+      # - install the rancher-upgrade-prep tool
+      - git clone https://github.com/robzhu/rancher-upgrade prep
+      - node ./prep/rancher-upgrade.js $RANCHER_SERVICE_NAME ezephoenix/hello-world:0.$CIRCLE_BUILD_NUM
