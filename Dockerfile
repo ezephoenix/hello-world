@@ -1,4 +1,4 @@
-FROM robzhu/nodejs
+FROM node:4.1-slim
 
 EXPOSE 80
 
