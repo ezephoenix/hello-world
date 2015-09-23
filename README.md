@@ -5,4 +5,4 @@
 A simple hello world web page hosted in nodejs
 
 #### Instructions
-docker run -it -p 80:80 ezephoenix/hello-world
+docker run -it -p 80:80 ezephoenix/hello-world:0.15
