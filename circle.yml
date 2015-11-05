@@ -3,24 +3,27 @@ machine:
     - docker
 
 dependencies:
+  pre:
+    - docker info
   override:
-    - echo "override section"
+    - docker build -t $IMAGE_NAME .
+    - docker tag $IMAGE_NAME $IMAGE_NAME:0.$CIRCLE_BUILD_NUM
 
 test:
   override:
-    - echo "no tests yet =("
+    - docker run -d -p 80:4000 --name hello $IMAGE_NAME:0.$CIRCLE_BUILD_NUM
 
 deployment:
   hub:
     branch: master
     commands:
-      - docker build -t ezephoenix/hello-world:0.$CIRCLE_BUILD_NUM .
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push ezephoenix/hello-world:0.$CIRCLE_BUILD_NUM
+      - docker push $IMAGE_NAME
+      - docker push $IMAGE_NAME:0.$CIRCLE_BUILD_NUM
 
       # - install the rancher-upgrade-prep tool
       - git clone https://github.com/ezephoenix/rancher-upgrade.git
       - cd rancher-upgrade && npm install
-
+      
       # deploy to ezecloud.net
       - node ./rancher-upgrade/rancher-upgrade.js $RANCHER_SERVICE_NAME $IMAGE_NAME:0.$CIRCLE_BUILD_NUM
