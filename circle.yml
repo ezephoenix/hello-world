@@ -21,3 +21,6 @@ deployment:
       # - install the rancher-upgrade-prep tool
       - git clone https://github.com/ezephoenix/rancher-upgrade.git
       - cd rancher-upgrade && npm install
+
+      # deploy to ezecloud.net
+      node ./rancher-upgrade/rancher-upgrade.js $RANCHER_SERVICE_NAME $IMAGE_NAME:0.$CIRCLE_BUILD_NUM
